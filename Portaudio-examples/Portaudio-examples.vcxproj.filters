@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\libsndfile">
+      <UniqueIdentifier>{67d2feac-277a-48c2-b74d-e77783cddfe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\heavy">
+      <UniqueIdentifier>{b842bf63-600e-4364-a2e4-1167c7a4c94c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\portaudio\include\pa_asio.h">
@@ -20,6 +26,54 @@
     </ClInclude>
     <ClInclude Include="..\..\portaudio\include\portaudio.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Documents\workspace\libsndfile\src\sndfile.h">
+      <Filter>Source Files\libsndfile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\Heavy_test_osc.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\Heavy_test_osc.hpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HeavyContext.hpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HeavyContextInterface.hpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvHeavy.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvHeavyInternal.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvLightPipe.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvMath.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvMessage.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvMessagePool.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvMessageQueue.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvSignalPhasor.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvSignalVar.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvTable.h">
+      <Filter>Source Files\heavy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\heavy\HvUtils.h">
+      <Filter>Source Files\heavy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,5 +143,43 @@
     <ClCompile Include="..\..\portaudio\src\hostapi\wmme\pa_win_wmme.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\heavy\Heavy_test_osc.cpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HeavyContext.cpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvHeavy.cpp">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvLightPipe.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvMessage.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvMessagePool.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvMessageQueue.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvSignalPhasor.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvSignalVar.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvTable.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\heavy\HvUtils.c">
+      <Filter>Source Files\heavy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Documents\workspace\libsndfile\CMakeBuild\Debug\libsndfile-1.dll">
+      <Filter>Source Files\libsndfile</Filter>
+    </None>
   </ItemGroup>
 </Project>

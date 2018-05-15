@@ -75,8 +75,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Horizons\source\repos\ASIOSDK2\host\pc;C:\Users\Horizons\source\repos\ASIOSDK2\host;C:\Users\Horizons\source\repos\ASIOSDK2\common;C:\Users\Horizons\source\repos\portaudio\src\os\win;C:\Users\Horizons\source\repos\portaudio\src\common;C:\Users\Horizons\source\repos\portaudio\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PA_USE_ASIO=1;PA_USE_DS=0;PA_USE_WMME=1;PA_USE_WASAPI=1;PA_USE_WDMKS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Horizons\Documents\workspace\libsndfile\CMakeBuild\src;C:\Users\Horizons\source\repos\Portaudio-examples\Portaudio-examples\Source\heavy;C:\Users\Horizons\source\repos\ASIOSDK2\host\pc;C:\Users\Horizons\source\repos\ASIOSDK2\host;C:\Users\Horizons\source\repos\ASIOSDK2\common;C:\Users\Horizons\source\repos\portaudio\src\os\win;C:\Users\Horizons\source\repos\portaudio\src\common;C:\Users\Horizons\source\repos\portaudio\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PA_USE_ASIO=1;PA_USE_DS=0;PA_USE_WMME=1;PA_USE_WASAPI=1;PA_USE_WDMKS=1;DHV_SIMD_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,10 +139,40 @@
     <ClCompile Include="..\..\portaudio\src\os\win\pa_win_waveformat.c" />
     <ClCompile Include="..\..\portaudio\src\os\win\pa_x86_plain_converters.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\heavy\HeavyContext.cpp" />
+    <ClCompile Include="Source\heavy\Heavy_test_osc.cpp" />
+    <ClCompile Include="Source\heavy\HvHeavy.cpp" />
+    <ClCompile Include="Source\heavy\HvLightPipe.c" />
+    <ClCompile Include="Source\heavy\HvMessage.c" />
+    <ClCompile Include="Source\heavy\HvMessagePool.c" />
+    <ClCompile Include="Source\heavy\HvMessageQueue.c" />
+    <ClCompile Include="Source\heavy\HvSignalPhasor.c" />
+    <ClCompile Include="Source\heavy\HvSignalVar.c" />
+    <ClCompile Include="Source\heavy\HvTable.c" />
+    <ClCompile Include="Source\heavy\HvUtils.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Documents\workspace\libsndfile\src\sndfile.h" />
     <ClInclude Include="..\..\portaudio\include\pa_asio.h" />
     <ClInclude Include="..\..\portaudio\include\portaudio.h" />
+    <ClInclude Include="Source\heavy\HeavyContext.hpp" />
+    <ClInclude Include="Source\heavy\HeavyContextInterface.hpp" />
+    <ClInclude Include="Source\heavy\Heavy_test_osc.h" />
+    <ClInclude Include="Source\heavy\Heavy_test_osc.hpp" />
+    <ClInclude Include="Source\heavy\HvHeavy.h" />
+    <ClInclude Include="Source\heavy\HvHeavyInternal.h" />
+    <ClInclude Include="Source\heavy\HvLightPipe.h" />
+    <ClInclude Include="Source\heavy\HvMath.h" />
+    <ClInclude Include="Source\heavy\HvMessage.h" />
+    <ClInclude Include="Source\heavy\HvMessagePool.h" />
+    <ClInclude Include="Source\heavy\HvMessageQueue.h" />
+    <ClInclude Include="Source\heavy\HvSignalPhasor.h" />
+    <ClInclude Include="Source\heavy\HvSignalVar.h" />
+    <ClInclude Include="Source\heavy\HvTable.h" />
+    <ClInclude Include="Source\heavy\HvUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Documents\workspace\libsndfile\CMakeBuild\Debug\libsndfile-1.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

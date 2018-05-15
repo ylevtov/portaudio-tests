@@ -44,15 +44,19 @@
 #include <stdio.h>
 #include <math.h>
 #include "portaudio.h"
-#define NUM_SECONDS   (4)
+#include "Heavy_test_osc.hpp"
+#include "sndfile.h"
+
+#define NUM_SECONDS   (2)
 #define SAMPLE_RATE   (44100)
 
-typedef struct
-{
-	float left_phase;
-	float right_phase;
-}
-paTestData;
+// UserData struct to be passed to the audio callback
+typedef struct {
+	Heavy_test_osc *hvContext;
+	float *fileBuffer;
+	unsigned long fileNumFrames;
+	unsigned long fileIndex;
+} UserData;
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 ** It may called at interrupt level on some machines so don't do anything
@@ -65,38 +69,41 @@ static int patestCallback(const void *inputBuffer, void *outputBuffer,
 	void *userData)
 {
 	/* Cast data passed through stream to our structure. */
-	paTestData *data = (paTestData*)userData;
+	UserData *data = (UserData*)userData;
 	float *out = (float*)outputBuffer;
 	unsigned int i;
 	(void)inputBuffer; /* Prevent unused variable warning. */
 
-	for (i = 0; i<framesPerBuffer; i++)
-	{
-		*out++ = data->left_phase;  /* left */
-		*out++ = data->right_phase;  /* right */
-									 /* Generate simple sawtooth phaser that ranges between -1.0 and 1.0. */
-		data->left_phase += 0.01f;
-		/* When signal reaches top, drop back down. */
-		if (data->left_phase >= 1.0f) data->left_phase -= 2.0f;
-		/* higher pitch so we can distinguish left and right. */
-		data->right_phase += 0.03f;
-		if (data->right_phase >= 1.0f) data->right_phase -= 2.0f;
-	}
-	return 0;
+	 // calculate num frames left to read
+	long numFramesLeft = data->fileNumFrames - data->fileIndex;
+	long numFramesToRead = (numFramesLeft < framesPerBuffer) ? numFramesLeft : framesPerBuffer;
+
+	// process buffers through heavy patch
+	numFramesToRead = data->hvContext->processInline(NULL, out, (int)numFramesToRead);
+
+	printf("numFramesToRead %i \n", (int)numFramesToRead);
+
+	// increment read index
+	data->fileIndex += numFramesToRead;
+
+	return (data->fileIndex >= data->fileNumFrames) ? paComplete : paContinue;
 }
 
 /*******************************************************************/
-static paTestData data;
+static UserData data;
 int main();
 int main()
 {
 	PaStream *stream;
 	PaError err;
 	PaStreamParameters outputParameters;
+	PaStreamParameters inputParameters;
 
-	printf("PortAudio Test: output sawtooth wave.\n");
+	UserData data = { NULL, NULL, 0, 0 };
+
+	// printf("PortAudio Test: output sawtooth wave.\n");
 	/* Initialize our data for use by callback. */
-	data.left_phase = data.right_phase = 0.0;
+	// data.left_phase = data.right_phase = 0.0;
 	/* Initialize library before making any other calls. */
 	err = Pa_Initialize();
 	if (err != paNoError) goto error;
@@ -110,26 +117,43 @@ int main()
 		goto error;
 	}
 	const   PaDeviceInfo *deviceInfo;
-	for (int d = 0; d<numDevices; d++)
-	{
-		deviceInfo = Pa_GetDeviceInfo(d);
-		printf("DEVICE INFO %x", deviceInfo);
-	}
+	// for (int d = 0; d<numDevices; d++)
+	// {
+	// 	deviceInfo = Pa_GetDeviceInfo(d);
+	// 	printf("DEVICE INFO %x", deviceInfo);
+	// }
 
 	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
 	if (outputParameters.device == paNoDevice) {
 		fprintf(stderr, "Error: No default output device.\n");
 		goto error;
 	}
-	outputParameters.channelCount = 2;       /* stereo output */
+	outputParameters.channelCount = 1;       /* mono output */
 	outputParameters.sampleFormat = paFloat32; /* 32 bit floating point output */
 	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultLowOutputLatency;
 	outputParameters.hostApiSpecificStreamInfo = NULL;
+	
+	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+	if (inputParameters.device == paNoDevice) {
+		fprintf(stderr, "Error: No default input device.\n");
+		goto error;
+	}
+	inputParameters.channelCount = 2;                    /* stereo input */
+	inputParameters.sampleFormat = paFloat32;
+	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultLowInputLatency;
+	inputParameters.hostApiSpecificStreamInfo = NULL;
+
+	// Setup Heavy context
+	data.hvContext = new Heavy_test_osc(SAMPLE_RATE);
+	data.fileNumFrames = 48000;
+
+	printf("Instantiated heavy context:\n - numInputChannels: %d\n - numOutputChannels: %d\n\n",
+		hv_getNumInputChannels(data.hvContext), hv_getNumOutputChannels(data.hvContext));
 
 	/* Open an audio I/O stream. */
 	err = Pa_OpenStream(
 		&stream,
-		NULL, // no input channels
+		&inputParameters,
 		&outputParameters,
 		SAMPLE_RATE,
 		256,
@@ -141,17 +165,17 @@ int main()
 
 	err = Pa_StartStream(stream);
 	if (err != paNoError) goto error;
-
+	
 	/* Sleep for several seconds. */
 	Pa_Sleep(NUM_SECONDS * 1000);
-
+	
 	err = Pa_StopStream(stream);
 	if (err != paNoError) goto error;
 	err = Pa_CloseStream(stream);
 	if (err != paNoError) goto error;
 	Pa_Terminate();
 	printf("Test finished.\n");
-	return err;
+	return err; 
 error:
 	Pa_Terminate();
 	fprintf(stderr, "An error occured while using the portaudio stream\n");
