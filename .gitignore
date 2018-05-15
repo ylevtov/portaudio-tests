@@ -84,3 +84,5 @@ misc/Photon-OnPremise-Server-SDK_v4-0-29-11263/
 
 !dev/bootstrap/**/*.*
 dev/bootstrap/lambchild-bootstrap/lambchild-bootstrap/packages/
+Portaudio-examples/Debug/
+Debug/
